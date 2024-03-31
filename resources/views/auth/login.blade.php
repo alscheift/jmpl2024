@@ -64,13 +64,15 @@
             };
 
             var onloadCallback = function() {
-                grecaptcha.render('recaptcha',{
-                    'sitekey': '{{config('services.recaptcha.site_key')}}', // so weird syntax
-                    'theme': 'light',
-                    'callback': callback,
-                    'expired-callback': expiredCallback,
-                    'error-callback': errorCallback
-                });
+                @if (session('loginAttempts', 0) >= 3)
+                    grecaptcha.render('recaptcha',{
+                        'sitekey': '{{config('services.recaptcha.site_key')}}', // so weird syntax
+                        'theme': 'light',
+                        'callback': callback,
+                        'expired-callback': expiredCallback,
+                        'error-callback': errorCallback
+                    });
+                @endif
             };
         </script>
     @endpush 
