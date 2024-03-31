@@ -32,6 +32,9 @@
                 </label>
             </div>
 
+            <input type="hidden" id="recaptcha_token" name="recaptcha_token" value="placeholder">
+            <div id="recaptcha" class="flex mt-5 justify-evenly"></div> 
+
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
@@ -45,4 +48,30 @@
             </div>
         </form>
     </x-authentication-card>
+    @push('scripts') 
+        <script>
+            const callback = function(token) {
+                document.getElementById('recaptcha_token').value = token;
+            };
+
+            const expiredCallback = function() {
+                grecaptcha.reset();
+                document.getElementById('recaptcha_token').value = '';
+            };
+
+            const errorCallback = function() {
+                document.getElementById('recaptcha_token').value = '';
+            };
+
+            var onloadCallback = function() {
+                grecaptcha.render('recaptcha',{
+                    'sitekey': '{{config('services.recaptcha.site_key')}}', // so weird syntax
+                    'theme': 'light',
+                    'callback': callback,
+                    'expired-callback': expiredCallback,
+                    'error-callback': errorCallback
+                });
+            };
+        </script>
+    @endpush 
 </x-guest-layout>
