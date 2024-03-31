@@ -12,7 +12,7 @@ class CaptchaValidation
     {
 
         // if login attempts exceed 3, validate the recaptcha token
-        if (session('loginAttempts', 0) >= 3) {
+        if (session('loginAttempts', 0) >= config('session.login_attempts')) {
             Validator::make($request->all(), [
                 'recaptcha_token' => ['required', new Recaptcha()],
             ])->validate();

@@ -215,4 +215,15 @@ return [
 
     'partitioned' => env('SESSION_PARTITIONED_COOKIE', false),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login Attempts
+    |--------------------------------------------------------------------------
+    |
+    | This option determines the number of login attempts before the recaptcha
+    | will be shown. This is used to prevent brute force attacks.
+    | (wew, the AI can generate this)
+    */
+    'login_attempts' => env('SESSION_LOGIN_ATTEMPTS', 3),
 ];

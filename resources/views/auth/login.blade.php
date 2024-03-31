@@ -64,7 +64,7 @@
             };
 
             var onloadCallback = function() {
-                @if (session('loginAttempts', 0) >= 3)
+                @if (session('loginAttempts', 0) >= config('session.login_attempts'))
                     grecaptcha.render('recaptcha',{
                         'sitekey': '{{config('services.recaptcha.site_key')}}', // so weird syntax
                         'theme': 'light',
@@ -72,6 +72,8 @@
                         'expired-callback': expiredCallback,
                         'error-callback': errorCallback
                     });
+                @else
+                    // No captcha horray :3 (max fail attempt is {{config('session.login_attempts')}})
                 @endif
             };
         </script>
