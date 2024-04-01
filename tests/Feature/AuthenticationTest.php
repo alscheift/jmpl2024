@@ -42,7 +42,7 @@ class AuthenticationTest extends TestCase
     public function test_user_can_authenticate_after_n_minus_one_times_failure(): void
     {
 
-        $this->markTestSkipped('Error jika tidak ada captcha.');
+        // $this->markTestSkipped('Error jika tidak ada captcha.'); // Fixed di Captcha Validation (attempt+1 used instead of attempt)
         $user = User::factory()->create();
 
         for ($i = 0; $i < $this->max_login_attempts - 1; $i++) {
@@ -56,7 +56,6 @@ class AuthenticationTest extends TestCase
         $response = $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
-            // 'recaptcha_token' => $this->recaptcha_secret, // Kenapa ada captcha?
         ]);
 
         $this->assertAuthenticated();
