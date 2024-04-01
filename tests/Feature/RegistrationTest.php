@@ -10,6 +10,13 @@ use Tests\TestCase;
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
+    protected $recaptcha_secret;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->recaptcha_secret = config('services.recaptcha.secret_key');
+    }
 
     public function test_registration_screen_can_be_rendered(): void
     {
@@ -44,6 +51,7 @@ class RegistrationTest extends TestCase
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'recaptcha_token' =>  $this->recaptcha_secret,
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
         ]);
 
