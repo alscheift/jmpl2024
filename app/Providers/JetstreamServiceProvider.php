@@ -37,8 +37,8 @@ class JetstreamServiceProvider extends ServiceProvider
         Fortify::authenticateThrough(function (Request $request) {
             return array_filter([
                 config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
-                AddLoginAttempts::class, // Not from the original code
                 CaptchaValidation::class, // Not from the original code
+                AddLoginAttempts::class, // Not from the original code
                 RedirectIfTwoFactorAuthenticatable::class,
                 AttemptToAuthenticate::class,
                 PrepareAuthenticatedSession::class,
